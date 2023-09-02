@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { createContext, useEffect } from "react";
 import { useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { IoMdClose } from "react-icons/io";
@@ -6,13 +6,22 @@ import { useNavigate, useParams } from "react-router-dom";
 import MicIcon from "../assets/mic.svg";
 import ImageIcon from "../assets/image.svg";
 
-function SearchInput(props) {
+function SearchInput({ buttonClickHandler }) {
   const { query } = useParams();
   const [searchQuery, setSearchQuery] = useState(query || "");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (buttonClickHandler == true) {
+      SearchQueryFromUSer();
+    }
+  }, [buttonClickHandler]);
+
   const SearchQueryFromUSer = () => {
-    if (event.key === "Enter" && searchQuery.length > 0) {
+    if (
+      (event.key === "Enter" || buttonClickHandler) &&
+      searchQuery.length > 0
+    ) {
       navigate(`/${searchQuery}/${1}`);
     }
   };
